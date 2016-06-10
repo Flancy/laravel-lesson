@@ -46,6 +46,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    @can('admin-access')
+                        <li><a href="{{ url('/admin') }}">Админ. панель</a></li>
+                    @endcan
                 </ul>
 
                 <!-- Right Side Of Navbar -->
