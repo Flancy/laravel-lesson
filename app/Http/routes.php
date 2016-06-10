@@ -21,34 +21,8 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/task', function (Request $request) {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
+Route::get('/task', 'TaskController@index');
 
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
-});
+Route::post('/task', 'TaskController@store');
 
-Route::post('/task', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/task')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
-
-    return redirect('/task');
-});
-
-Route::delete('/task/{task}', function (Task $task) {
-    $task->delete();
-
-    return redirect('/task');
-});
+Route::delete('/task/{task}', 'TaskController@destroy');
