@@ -13,15 +13,7 @@
     <link rel="stylesheet" href="http://bootswatch.com/lumen/bootstrap.min.css">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
-    <style>
-        body {
-            font-family: 'Roboto';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">
@@ -46,6 +38,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/task') }}">Задачи</a></li>
                     @can('admin-access')
                         <li><a href="{{ url('/admin') }}">Админ. панель</a></li>
                     @endcan
@@ -55,8 +48,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Вход</a></li>
+                        <li><a href="{{ url('/register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -64,7 +57,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a></li>
                             </ul>
                         </li>
                     @endif
