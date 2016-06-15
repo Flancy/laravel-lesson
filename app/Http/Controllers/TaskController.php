@@ -6,6 +6,7 @@ use App\Task;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Repositories\TaskRepository;
+use Response;
 
 class TaskController extends Controller
 {
@@ -24,6 +25,22 @@ class TaskController extends Controller
         return view('tasks.index', [
             'tasks' => $this->tasks->forUser($request->user()),
         ]);
+    }
+
+    public function show(Request $request)
+    {
+        if($request->ajax()) {
+            $userTasks = $this->tasks->forUser($request->user());
+            $i = 0;
+            foreach ($userTasks as $task) {
+                $dateTask[$i] = $task->created_at;
+                $i++;
+            }
+
+            return Response::json($dateTask);
+        }
+
+        return abort(404);
     }
 
     public function store(Request $request)
