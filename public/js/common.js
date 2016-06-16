@@ -101,6 +101,18 @@ function countTaskInDat (arrayDays) {
     return countTask;
 }
 
+function uploadFile(element) {
+    if (element.lastIndexOf('\\')){
+        var i = element.lastIndexOf('\\')+1;
+    }
+    else{
+        var i = element.lastIndexOf('/')+1;
+    }
+    var filename = element.slice(i);
+    var uploaded = document.getElementById("changeAvatar");
+    uploaded.innerHTML = filename;
+}
+
 $(document).ready(function () {
     var dataTask;
     var arrayTaskDays = [];
@@ -137,6 +149,4 @@ $(document).ready(function () {
             }
         });
     });
-
-
 });
