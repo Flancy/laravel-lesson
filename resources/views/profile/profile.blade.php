@@ -10,7 +10,7 @@
                 <div class="panel-body clearfix">
                     <img src="/images/uploads/avatars/{{ $user->avatar }}" alt="{{ $user->name }}" class="avatar" />
                     <h3>{{ $user->name }}</h3>
-                    <form action="/profile" method="post" enctype="multipart/form-data" class="form-avatar">
+                    <form action="/profile" method="post" enctype="multipart/form-data" class="form-avatar" id="formAvatar">
                         <div class="form-group">
                             <label for="avatar" class="control-label">
                                 Обновить изображение профиля
@@ -18,13 +18,15 @@
                         </div>
                         <div class="form-group">
                             <label class="btn btn-success btn-file">
-                                Выберите файл... <input name="avatar" type="file" onchange="uploadFile(this.value);">
+                                Выберите файл... <input name="avatar" type="file" onchange="selectFile(this.value);">
                             </label>
                             <span id="changeAvatar">Файл не выбран</span>
                         </div>
-                        {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="submit" value="Отправить" class="btn btn-sm btn-primary">
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-success"></div>
+                            </div>
+                            <input type="submit" name="submit" value="Отправить" class="btn btn-sm btn-primary" id="submitAvatar">
                         </div>
                     </form>
                 </div>

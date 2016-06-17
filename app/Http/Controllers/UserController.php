@@ -15,16 +15,31 @@ class UserController extends Controller
     }
 
     public function updateAvatar(Request $request) {
-        if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save( public_path('/images/uploads/avatars/' . $filename ) );
+        if($request->ajax()) {
+            if($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                $makeImg = Image::make($avatar)->resize(300, 300)->save( public_path('/images/uploads/avatars/' . $filename ) );
 
-            $user = Auth::user();
-            $user->avatar = $filename;
-            $user->save();
+                if($makeImg) {
+                    $user = Auth::user();
+                    $user->avatar = $filename;
+                    $user->save();
+
+                    return response()->json([Auth::user()]);
+                }
+
+                else {
+                    return response()->json(array('data' => $request->all(), 'error' => 'Не сохранился файл'));
+                }
+            }
+            else {
+                return response()->json(array('data' => $request->all(),'error' => 'Нет файла'));
+            }
         }
 
-        return view('profile.profile', ['user' => Auth::user()]);
+        else {
+            return response()->json(array('error' => 'Не ajax'));
+        }
     }
 }
