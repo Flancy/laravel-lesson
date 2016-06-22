@@ -185,4 +185,52 @@ $(document).ready(function () {
             });
         });
     }
+
+    else if (pathname == '/task') {
+        var formTask = $('#formTask');
+        var submitTask = $('#submitTask');
+        var tableTasks = $('#tableTasks');
+
+        $(formTask).submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                beforeSend: function () {
+                    $(submitTask).html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> Добавление задачи');
+                },
+                success: function (data) {
+                    $(submitTask).html('<i class="fa fa-plus"></i> Добавить задачу');
+                    $(tableTasks).append('<tr class="info"><td><p>'+data.name+'</p></td><td><form action="/task/'+data.id+'" method="POST" class="formDeleteTask"><input type="hidden" name="_method" value="DELETE"><button type="submit" class="btn btn-danger pull-right submitDeleteTask"><i class="fa fa-trash"></i> Удалить</button></form></td></tr>');
+                },
+                error: function () {
+                    $(submitTask).html('<i class="fa fa-plus"></i> Добавить задачу');
+                }
+            });
+        });
+        $(document).on('submit','.formDeleteTask', function (event) {
+            event.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                beforeSend: function () {
+                    $(form).find('.submitDeleteTask').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> Удаление');
+                },
+                success: function (data) {
+                    $(form).find('.submitDeleteTask').html('<i class="fa fa-trash"></i> Добавить задачу');
+                    $(form).parent().parent().remove();
+                },
+                error: function () {
+                    $(form).find('.submitDeleteTask').html('<i class="fa fa-trash"></i> Удалить');
+                }
+            });
+        });
+    }
+
 });

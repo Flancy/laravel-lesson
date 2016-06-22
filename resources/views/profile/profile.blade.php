@@ -10,7 +10,7 @@
                 <div class="panel-body clearfix">
                     <img src="/images/uploads/avatars/{{ $user->avatar }}" alt="{{ $user->name }}" class="avatar" />
                     <h3>{{ $user->name }}</h3>
-                    <form action="/profile" method="post" enctype="multipart/form-data" class="form-avatar" id="formAvatar">
+                    <form action="{{ url('profile') }}" method="post" enctype="multipart/form-data" class="form-avatar" id="formAvatar">
                         <div class="form-group">
                             <label for="avatar" class="control-label">
                                 Обновить изображение профиля
