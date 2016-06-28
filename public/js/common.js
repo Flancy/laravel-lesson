@@ -58,6 +58,16 @@ function selectFile(element) {
     uploaded.innerHTML = filename;
 }
 
+function appendMessage(data) {
+    $('#chat').append(
+        '<li class="clearfix"><span class="chat-img"><img src="/images/uploads/avatars/'+data.user.avatar+'" alt="User Avatar"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.author+'</strong><small class="text-muted"><i class="fa fa-clock-o"></i> 12 mins ago</small></div><p>'+data.message+'</p></div></li>'
+    );
+    $(function(){
+        var chat = $('#chat');
+        chat.scrollTop(chat.prop('scrollHeight'));
+    });
+}
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -65,6 +75,7 @@ $(document).ready(function () {
             'X-Requested-With': 'XMLHttpRequest'
         }
     });
+
     var pathname = window.location.pathname;
 
     if (pathname == '/home') {
@@ -222,14 +233,57 @@ $(document).ready(function () {
                 beforeSend: function () {
                     $(form).find('.submitDeleteTask').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> Удаление');
                 },
-                success: function (data) {
-                    $(form).find('.submitDeleteTask').html('<i class="fa fa-trash"></i> Добавить задачу');
-                    $(form).parent().parent().remove();
-                },
                 error: function () {
                     $(form).find('.submitDeleteTask').html('<i class="fa fa-trash"></i> Удалить');
                 }
             });
+        });
+    }
+
+    else if (pathname == '/chat') {
+        var socket = io(':6001'),
+            channel = 'chat:message';
+
+        socket.on('connect', function() {
+            socket.emit('subscribe', channel);
+        });
+
+        socket.on('error', function(error) {
+            console.warn('Error', error);
+        });
+
+        socket.on('message', function(message) {
+            console.info(message);
+        });
+
+        $(function(){
+            var chat = $('#chat');
+            chat.scrollTop(chat.prop('scrollHeight'));
+        });
+
+        $(document).on('submit', '#formChat', function (event) {
+            event.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                beforeSend: function () {
+                    $(form).find('#submitChat').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> Отправка сообщения');
+                },
+                success: function (data) {
+                    $(form).find('#submitChat').html('<i class="fa fa-envelope"></i> Отправить сообщение');
+                    $(form)[0].reset();
+                },
+                error: function () {
+                    $(form).find('#submitChat').html('<i class="fa fa-envelope"></i> Отправить сообщение');
+                }
+            });
+        });
+
+        socket.on('chat:message', function(data) {
+            appendMessage(JSON.parse(data));
         });
     }
 

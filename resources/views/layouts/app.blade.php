@@ -40,6 +40,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Главная</a></li>
                     <li><a href="{{ url('/task') }}">Задачи</a></li>
+                    <li><a href="{{ url('/chat') }}">Чат</a></li>
                     @can('admin-access')
                         <li><a href="{{ url('/admin') }}">Админ. панель</a></li>
                     @endcan
@@ -73,6 +74,7 @@
 
     <!-- JavaScripts -->
     <script src="/libs/jquery/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://use.fontawesome.com/2c5d3328d3.js"></script>
     <script src="/libs/bootstrap/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

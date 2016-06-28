@@ -37,7 +37,8 @@ p
                 border-top-right-radius: 4px
                 border-bottom-right-radius: 4px
 #submitTask,
-.submitDeleteTask
+.submitDeleteTask,
+#submitChat
     i
         font-size: 12px
 
@@ -60,3 +61,54 @@ p
             display: none
         .progress
             display: none
+
+#chat
+    max-height: 500px
+    overflow: auto
+    padding: 0 20px
+    background-color: #f9f9f9
+    list-style: none
+    border-radius: 8px
+    li
+        margin: 15px 0
+        .primary-font
+            color: #3c8dbc
+        img
+            width: 45px
+            height: 45px
+            border-radius: 50%
+            max-width: 100%
+        .chat-img
+            float: left
+        .chat-body
+            margin-left: 70px
+            padding: 0 0 20px 0
+            position: relative
+            background-color: #ffffff
+            font-size: 11px
+            padding: 10px
+            border: 1px solid #f1f5fc
+            box-shadow: 0 1px 1px rgba(0,0,0,.05)
+            small
+                float: right
+            p
+                margin: 0
+            .header
+                padding: 0 0 5px 0
+                border-bottom: 1px solid #f1f5fc
+            &:before
+                position: absolute
+                top: 10px
+                left: -8px
+                display: inline-block
+                background: #fff
+                width: 16px
+                height: 16px
+                border-top: 1px solid #f1f5fc
+                border-left: 1px solid #f1f5fc
+                content: ''
+                transform: rotate(-45deg)
+                -webkit-transform: rotate(-45deg)
+                -moz-transform: rotate(-45deg)
+                -ms-transform: rotate(-45deg)
+                -o-transform: rotate(-45deg)

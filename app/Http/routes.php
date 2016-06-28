@@ -1,6 +1,5 @@
 <?php
 
-use App\Task;
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +18,11 @@ Route::get('/', function () {
 
 Route::auth();
 
+Route::group(['prefix' => 'ws'], function() {
+    Route::get('check-auth', 'Ws\WsController@checkAuth');
+    Route::get('check-sub/{channel}', 'Ws\WsController@checkSub');
+});
+
 Route::get('/home', 'HomeController@index');
 
 Route::get('/task', 'TaskController@index');
@@ -28,3 +32,5 @@ Route::delete('/task/{task}', 'TaskController@destroy');
 
 Route::get('/profile', 'UserController@profile');
 Route::post('/profile', 'UserController@updateAvatar');
+
+Route::controller('chat', 'ChatController');
